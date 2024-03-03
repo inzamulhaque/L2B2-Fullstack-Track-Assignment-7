@@ -50,3 +50,31 @@ INSERT INTO employees (employee_name, age, email, department_id, salary, status)
     ('Sam', 34, 'sam@example.net', 2, 64000, NULL),
     ('Taylor', 31, 'taylor@yahoo.com', 3, 58000, NULL);
 
+-- Retrieve all employees with a salary greater than 60000
+SELECT * FROM employees WHERE salary>60000;
+
+-- Retrieve the names of employees using a limit of 2, starting from the 3rd employee.
+SELECT employee_name FROM employees LIMIT 2 OFFSET 2;
+
+-- Calculate and display the average age of all employees.
+SELECT avg(age) as average_age FROM employees;
+
+-- Retrieve the names of employees whose email addresses contain 'example.com', 'example.net', or 'google.com'.
+SELECT employee_name FROM employees
+    WHERE email LIKE'%example.com%' OR email LIKE'%example.net%' OR email LIKE'%google.com%';
+
+-- Retrieve the names of all employees who belong to the department titled 'Engineering'.
+SELECT employee_name FROM employees
+    JOIN departments USING(department_id)
+    WHERE department_name = 'Engineering';
+
+UPDATE employees
+    SET status = 'Promoted'
+    WHERE salary = (SELECT max(salary) as salary FROM employees);
+
+
+SELECT department_name, avg(salary) FROM employees
+    JOIN departments USING(department_id)
+    GROUP BY department_name;
+
+
